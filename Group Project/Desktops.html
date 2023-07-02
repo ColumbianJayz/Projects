@@ -1,0 +1,103 @@
+<!-Group Project-->
+
+<<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <link rel="stylesheet" type="text/css" href="DesktopsCSS.css">
+    <meta charset="utf-8">
+    <title>Desktops</title>
+<h1> Desktops</h1>
+</head>
+
+
+<body>
+  <nav class="navbar">
+
+  <div>
+      <a href="index.html">
+          <img class="logo" src="logo.png" width="128" height="128">
+      </a>
+  </div>
+
+  <div class="navbar">
+
+      <div class="dropdown">
+        <button class="dropbtn">Shop Computers
+          <i class="fa fa-caret-down"></i>
+        </button>
+        <div class="dropdown-content">
+          <a href="supercomputers.html"> Supercomputers</a>
+          <a href="2in1.html">2-in-1 Computers</a>
+          <a href="Tablets.html">Tablets</a>
+          <a href="gaminglaptops.html">Gaming Laptops</a>
+          <a href="Desktops.html"> Desktops</a>
+          <a href="GamingConsoles.html">Gaming Consoles</a>
+          <a href="Phones.html"> Phones</a>
+          <a href="Categories.html"> All Categories</a>
+        </div>
+
+      <a href="aboutUs.html">About Us</a>
+
+</nav>
+<script type="text/javascript">
+  $(document).ready(function(){
+    var data;
+    $.ajax({
+      type: "GET",
+      url: "/CSV/Consoles.csv",
+      dataType: "text",
+      success: function(response)
+      {
+        data = $.csv.toArrays(response);
+        generateHtmlTable(data);
+      }
+    });
+    function generateHtmlTable(data) {
+        var html = '<table>';
+      if(typeof(data[0]) === 'undefined') {
+        return null;
+      }
+      else {
+        $.each(data, function( index, row ) {
+          if(index == 0) {
+            html += '<thead>';
+            html += '<tr> <center>';
+            $.each(row, function( index, colData ) {
+                html += '<th>';
+                html += colData;
+                html += '</th>';
+            });
+            html += '</center></tr>';
+            html += '</thead>';
+          } else {
+            html += '<tr><center>';
+            $.each(row, function( index, colData ) {
+        let result = colData.includes("jpg");
+        if(result)
+        {
+          html += '<td>';
+          html += '<img src="Images/'+colData +'" alt="Insert_image" style="width:200px;height;200px">';
+          html += '</td>';
+        }
+        else{
+          html += '<td>';
+          html += colData;
+          html += '</td>';
+      }
+            });
+
+            {
+          html += '<td>';
+          html += '<button type="button" onclick="alert("You bou")>Buy</button>';
+          html += '</td>';
+      }
+
+            html += '</center></tr>';
+          }
+        });
+        html += '</table>';
+        $('#csv-display').append(html);
+      }
+    }
+  });
+</script>
